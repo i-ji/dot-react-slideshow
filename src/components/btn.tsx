@@ -1,18 +1,19 @@
-import { Images } from "./slideshow";
+import { useDispatch } from "react-redux";
+import { useSelector } from "../store/index";
+import { changeMain } from "../store/slideSlice";
 
-type Btn = {
-  thumbnailImg: Images[];
-  changeMain: (num: number) => void;
-  activeIndex: number;
-};
+const Btn: React.FC = () => {
+  const mainImg = useSelector((state) => state.slide.mainImg);
+  const thumbnailImg = useSelector((state) => state.slide.thumbnailImg);
+  const dispatch = useDispatch();
 
-const Btn: React.FC<Btn> = ({ changeMain, activeIndex, thumbnailImg }) => {
+  let activeIndex = mainImg.id;
   const prevImg = () => {
     activeIndex--;
     if (activeIndex < 0) {
       activeIndex = thumbnailImg.length - 1;
     }
-    changeMain(activeIndex);
+    dispatch(changeMain(activeIndex));
   };
 
   const nextImg = () => {
@@ -20,7 +21,7 @@ const Btn: React.FC<Btn> = ({ changeMain, activeIndex, thumbnailImg }) => {
     if (activeIndex > thumbnailImg.length - 1) {
       activeIndex = 0;
     }
-    changeMain(activeIndex);
+    dispatch(changeMain(activeIndex));
   };
   return (
     <div className="flex gap-2 my-2">

@@ -1,13 +1,12 @@
-import { Images } from "./slideshow";
+import { useDispatch } from "react-redux";
+import { useSelector } from "../store/index";
+import { changeMain } from "../store/slideSlice";
 
-type Thumbnail = {
-  thumbnailImg: Images[];
-  changeMain: (num: number) => void;
-};
-
-const Thumbnail: React.FC<Thumbnail> = ({ thumbnailImg, changeMain }) => {
+const Thumbnail: React.FC = () => {
+  const thumbnailImg = useSelector((state) => state.slide.thumbnailImg);
+  const dispatch = useDispatch();
   const selectThumbnails = (id: number) => {
-    changeMain(id);
+    dispatch(changeMain(id));
   };
 
   return (
